@@ -93,7 +93,7 @@ public class CanICoffeeFragment extends Fragment {
     private String getAmPm(int hour, int minute) {
         if (hour >= 12 && hour <= 24) {
             // 24H afternoon/evening
-            hour -= 12;
+            if(hour != 12) hour -= 12;
             return goodTime(hour) + ":" + goodTime(minute) + " PM";
         } else if (hour < 12) {
             // 24H morning
