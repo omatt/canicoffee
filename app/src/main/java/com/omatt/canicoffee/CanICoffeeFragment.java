@@ -1,6 +1,7 @@
 package com.omatt.canicoffee;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ public class CanICoffeeFragment extends Fragment {
     private final String KEY_TIME_COFFEE_2 = "time_coffee_2";
     private TextView mTextViewCurrentTime, mTextViewWakeTimeVal, mTextViewCoffeeTime1, mTextViewCoffeeTime2;
     private int currentHour, currentMinute, currentSecond;
+    private int coffeeTime1startHour, coffeeTime1endHour, coffeeTime2startHour, coffeeTime2endHour, coffeeTimeMinute;
 
     private Timer mTimer;
     private Handler mTimerHandler = new Handler();
@@ -50,10 +52,13 @@ public class CanICoffeeFragment extends Fragment {
                 mTimePicker = new TimePickerDialog(getActivity(), TimePickerDialog.THEME_DEVICE_DEFAULT_LIGHT, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mTextViewWakeTimeVal.setVisibility(View.VISIBLE);
-                        mTextViewCoffeeTime1.setVisibility(View.VISIBLE);
-                        mTextViewCoffeeTime2.setVisibility(View.VISIBLE);
                         mTextViewWakeTimeVal.setText(getAmPm(hourOfDay, minute));
+                        coffeeTime1startHour = fixExcessHour(hourOfDay + 3);
+                        coffeeTime1endHour = fixExcessHour(hourOfDay + 5);
+                        coffeeTime2startHour = fixExcessHour(hourOfDay + 9);
+                        coffeeTime2endHour = fixExcessHour(hourOfDay + 11);
+                        coffeeTimeMinute = minute;
+
                         mTextViewCoffeeTime1.setText(getString(R.string.txt_coffee_cycle_1)
                                 + "\n" + getAmPm(hourOfDay + 3, minute) + " " + getString(R.string.txt_time_till) + " " + getAmPm(hourOfDay + 5, minute));
                         mTextViewCoffeeTime2.setText(getString(R.string.txt_coffee_cycle_2)
@@ -65,9 +70,6 @@ public class CanICoffeeFragment extends Fragment {
         });
 
         if (savedInstanceState != null) {
-            mTextViewWakeTimeVal.setVisibility(View.VISIBLE);
-            mTextViewCoffeeTime1.setVisibility(View.VISIBLE);
-            mTextViewCoffeeTime2.setVisibility(View.VISIBLE);
             mTextViewCurrentTime.setText(savedInstanceState.getString(KEY_TIME_CURRENT));
             mTextViewWakeTimeVal.setText(savedInstanceState.getString(KEY_TIME_WAKE));
             mTextViewCoffeeTime1.setText(savedInstanceState.getString(KEY_TIME_COFFEE_1));
@@ -107,12 +109,19 @@ public class CanICoffeeFragment extends Fragment {
             return goodTime(hour) + ":" + goodTime(minute) + " PM";
         } else if (hour < 12) {
             // 24H morning
+            if (hour == 0) hour = 12;
             return goodTime(hour) + ":" + goodTime(minute) + " AM";
         } else {
             // Calculate num exceeding 24H
             hour -= 24;
             return goodTime(hour) + ":" + goodTime(minute) + " AM";
         }
+    }
+
+    private int fixExcessHour(int hour) {
+        if (hour > 24) hour -= 24;
+        else if (hour == 0) hour = 12;
+        return hour;
     }
 
     private String goodTime(int hourMin) {
@@ -132,7 +141,9 @@ public class CanICoffeeFragment extends Fragment {
                         currentHour = mCalendar.get(Calendar.HOUR);
                         currentMinute = mCalendar.get(Calendar.MINUTE);
                         currentSecond = mCalendar.get(Calendar.SECOND);
-                        mTextViewCurrentTime.setText(getString(R.string.txt_current_time) + " " + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond));
+                        mTextViewCurrentTime.setText(getString(R.string.txt_current_time) + " "
+                                + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond) + " "
+                                + ((mCalendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM"));
                         Log.i(TAG, "Time: " + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond));
                     }
                 });
@@ -146,5 +157,25 @@ public class CanICoffeeFragment extends Fragment {
             mTimer.cancel();
             mTimer.purge();
         }
+    }
+
+    private void setCalendarReminder(boolean isFirsCoffeeCycle) {
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        if (isFirsCoffeeCycle) {
+            intent.putExtra("beginTime", getTimeInMillis(coffeeTime1startHour, coffeeTimeMinute));
+            intent.putExtra("endTime", getTimeInMillis(coffeeTime1endHour, coffeeTimeMinute));
+            intent.putExtra("title", "First Coffee Cycle");
+        } else {
+            intent.putExtra("beginTime", getTimeInMillis(coffeeTime2startHour, coffeeTimeMinute));
+            intent.putExtra("endTime", getTimeInMillis(coffeeTime2endHour, coffeeTimeMinute));
+            intent.putExtra("title", "Second Coffee Cycle");
+        }
+        intent.putExtra("allDay", false);
+        startActivity(intent);
+    }
+
+    private long getTimeInMillis(int hour, int minute) {
+        return (hour * 60 * 60 * 1000) + (minute * 60 * 1000);
     }
 }
