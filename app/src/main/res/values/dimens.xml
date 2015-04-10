@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="action_btn_dimen">56dp</dimen>
+
     <dimen name="txt_size_small">16sp</dimen>
     <dimen name="txt_size_standard">18sp</dimen>
     <dimen name="txt_size_medium">20sp</dimen>

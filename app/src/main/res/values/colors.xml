@@ -2,13 +2,17 @@
 <resources>
     <color name="app_primary">@color/brown_600</color>
     <color name="app_primary_dark">@color/brown_800</color>
-    <color name="app_color_accent">@color/brown_500</color>
+    <color name="app_color_accent">@color/blue_a200</color>
     <color name="app_window_bg">@color/brown_300</color>
     <color name="app_text_color_primary">@color/white</color>
+    <color name="app_text_color_secondary">@color/gray</color>
     <color name="app_nav_bar_color">@color/brown_900</color>
 
     <color name="black">#000</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="gray">#727272</color>
     <color name="white">#FFF</color>
+    <color name="white_pressed">#f1f1f1</color>
 
     <!-- Brown -->
     <color name="brown_50">#EFEBE9</color>
@@ -21,4 +25,22 @@
     <color name="brown_700">#5D4037</color>
     <color name="brown_800">#4E342E</color>
     <color name="brown_900">#3E2723</color>
+
+    <!-- Blue -->
+    <color name="blue_50">#E1F5FE</color>
+    <color name="blue_100">#B3E5FC</color>
+    <color name="blue_200">#81D4FA</color>
+    <color name="blue_300">#4FC3F7</color>
+    <color name="blue_400">#29B6F6</color>
+    <color name="blue_500">#03A9F4</color>
+    <color name="blue_600">#039BE5</color>
+    <color name="blue_700">#0288D1</color>
+    <color name="blue_800">#0277BD</color>
+    <color name="blue_900">#01579B</color>
+    <!-- Blue accent-->
+    <color name="blue_a100">#80D8FF</color>
+    <color name="blue_a200">#40C4FF</color>
+    <color name="blue_a400">#00B0FF</color>
+    <color name="blue_a700">#0091EA</color>
+
 </resources>

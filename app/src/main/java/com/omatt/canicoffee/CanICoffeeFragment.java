@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.provider.CalendarContract.Events;
 
 /**
  * Created by Omatt on 4/10/2015.
@@ -69,6 +76,29 @@ public class CanICoffeeFragment extends Fragment {
             }
         });
 
+//        FloatingActionButton mFabRemindCoffeeTime1 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_1);
+//        FloatingActionButton mFabRemindCoffeeTime2 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_2);
+//        mFabRemindCoffeeTime1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setCalendarReminder(true);
+//            }
+//        });
+//        mFabRemindCoffeeTime2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setCalendarReminder(false);
+//            }
+//        });
+
+        FloatingActionButton mFabRemindCoffeeTime = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time);
+        mFabRemindCoffeeTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCalendarReminder();
+            }
+        });
+
         if (savedInstanceState != null) {
             mTextViewCurrentTime.setText(savedInstanceState.getString(KEY_TIME_CURRENT));
             mTextViewWakeTimeVal.setText(savedInstanceState.getString(KEY_TIME_WAKE));
@@ -120,7 +150,6 @@ public class CanICoffeeFragment extends Fragment {
 
     private int fixExcessHour(int hour) {
         if (hour > 24) hour -= 24;
-        else if (hour == 0) hour = 12;
         return hour;
     }
 
@@ -160,22 +189,40 @@ public class CanICoffeeFragment extends Fragment {
     }
 
     private void setCalendarReminder(boolean isFirsCoffeeCycle) {
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        if (isFirsCoffeeCycle) {
-            intent.putExtra("beginTime", getTimeInMillis(coffeeTime1startHour, coffeeTimeMinute));
-            intent.putExtra("endTime", getTimeInMillis(coffeeTime1endHour, coffeeTimeMinute));
-            intent.putExtra("title", "First Coffee Cycle");
+        if (!mTextViewWakeTimeVal.getText().toString().equals("")) {
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setType("vnd.android.cursor.item/event");
+            intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
+            if (isFirsCoffeeCycle) {
+                intent.putExtra("beginTime", getTimeInMillis(coffeeTime1startHour, coffeeTimeMinute));
+                intent.putExtra("endTime", getTimeInMillis(coffeeTime1endHour, coffeeTimeMinute));
+                intent.putExtra(Events.TITLE, "First Coffee Cycle");
+            } else {
+                intent.putExtra("beginTime", getTimeInMillis(coffeeTime2startHour, coffeeTimeMinute));
+                intent.putExtra("endTime", getTimeInMillis(coffeeTime2endHour, coffeeTimeMinute));
+                intent.putExtra(Events.TITLE, "Second Coffee Cycle");
+            }
+            intent.putExtra(Events.ALL_DAY, false);
+            startActivity(intent);
         } else {
-            intent.putExtra("beginTime", getTimeInMillis(coffeeTime2startHour, coffeeTimeMinute));
-            intent.putExtra("endTime", getTimeInMillis(coffeeTime2endHour, coffeeTimeMinute));
-            intent.putExtra("title", "Second Coffee Cycle");
+            Toast.makeText(getActivity(), getString(R.string.txt_toast_empty_time), Toast.LENGTH_SHORT).show();
         }
-        intent.putExtra("allDay", false);
-        startActivity(intent);
+    }
+
+    private void setCalendarReminder() {
+        if (!mTextViewWakeTimeVal.getText().toString().equals("")) {
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setType("vnd.android.cursor.item/event");
+            intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
+            intent.putExtra(Events.TITLE, "Coffee Cycle");
+            intent.putExtra(Events.ALL_DAY, false);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.txt_toast_empty_time), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private long getTimeInMillis(int hour, int minute) {
-        return (hour * 60 * 60 * 1000) + (minute * 60 * 1000);
+        return (hour * 60 * 60 * 1000L) + (minute * 60 * 1000L);
     }
 }

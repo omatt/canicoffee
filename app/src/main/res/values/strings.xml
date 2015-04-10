@@ -12,4 +12,8 @@
     <string name="txt_about_details">App base from the design of keikun17\'s <a href="http://keikun17.github.io/canicoffee/">Can I Coffee?</a> and coffee time calculations from <a href="http://en.ilovecoffee.jp/posts/view/110">ilovecoffee.jp</a>.
         \n\nSource available at <a href="https://github.com/omatt/canicoffee">GitHub</a>.
     </string>
+
+    <string name="txt_remind_coffee_time_1">First coffee time</string>
+    <string name="txt_remind_coffee_time_2">Second coffee time</string>
+    <string name="txt_toast_empty_time">Empty wake time!</string>
 </resources>
