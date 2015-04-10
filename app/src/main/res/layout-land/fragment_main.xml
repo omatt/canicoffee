@@ -26,8 +26,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
@@ -35,24 +35,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_wake_time"
-            android:textSize="@dimen/txt_size_medium" />
+            android:textColor="@color/app_primary"
+            android:textSize="@dimen/txt_size_large" />
 
         <TextView
             android:id="@+id/tv_wake_time_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/txt_size_medium" />
+            android:textSize="@dimen/txt_size_medium"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_coffee_time_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/txt_size_medium" />
+            android:textSize="@dimen/txt_size_medium"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_coffee_time_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/txt_size_medium" />
+            android:textSize="@dimen/txt_size_medium"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

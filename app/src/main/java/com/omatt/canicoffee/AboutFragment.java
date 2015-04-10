@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Created by Omatt on 4/10/2015.
+ */
+
 public class AboutFragment extends Fragment {
     private final String TAG = "AboutFragment";
 

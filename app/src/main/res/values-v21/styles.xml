@@ -20,11 +20,17 @@
         <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
         <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
         <item name="android:timePickerDialogTheme">@style/AppTheme.Dialog</item>
+
+        <item name="android:popupMenuStyle">@style/AppTheme.Popup</item>
     </style>
 
     <style name="AppTheme.Dialog" parent="android:Theme.Material.Dialog">
         <item name="colorAccent">@color/app_color_accent</item>
         <item name="colorPrimary">@color/app_primary</item>
         <item name="colorPrimaryDark">@color/app_primary_dark</item>
+    </style>
+
+    <style name="AppTheme.Popup" parent="Theme.AppCompat.Light">
+        <item name="android:popupBackground">@color/app_primary</item>
     </style>
 </resources>

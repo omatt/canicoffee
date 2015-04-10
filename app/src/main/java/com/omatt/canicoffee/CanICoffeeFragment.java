@@ -28,7 +28,6 @@ public class CanICoffeeFragment extends Fragment {
     private int currentHour, currentMinute, currentSecond;
 
     private Timer mTimer;
-    private TimerTask mTimerTask;
     private Handler mTimerHandler = new Handler();
 
     public CanICoffeeFragment() {
@@ -51,6 +50,9 @@ public class CanICoffeeFragment extends Fragment {
                 mTimePicker = new TimePickerDialog(getActivity(), TimePickerDialog.THEME_DEVICE_DEFAULT_LIGHT, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mTextViewWakeTimeVal.setVisibility(View.VISIBLE);
+                        mTextViewCoffeeTime1.setVisibility(View.VISIBLE);
+                        mTextViewCoffeeTime2.setVisibility(View.VISIBLE);
                         mTextViewWakeTimeVal.setText(getAmPm(hourOfDay, minute));
                         mTextViewCoffeeTime1.setText(getString(R.string.txt_coffee_cycle_1)
                                 + "\n" + getAmPm(hourOfDay + 3, minute) + " " + getString(R.string.txt_time_till) + " " + getAmPm(hourOfDay + 5, minute));
@@ -62,10 +64,10 @@ public class CanICoffeeFragment extends Fragment {
             }
         });
 
-        // Using TimerTask
-        startTimer();
-
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
+            mTextViewWakeTimeVal.setVisibility(View.VISIBLE);
+            mTextViewCoffeeTime1.setVisibility(View.VISIBLE);
+            mTextViewCoffeeTime2.setVisibility(View.VISIBLE);
             mTextViewCurrentTime.setText(savedInstanceState.getString(KEY_TIME_CURRENT));
             mTextViewWakeTimeVal.setText(savedInstanceState.getString(KEY_TIME_WAKE));
             mTextViewCoffeeTime1.setText(savedInstanceState.getString(KEY_TIME_COFFEE_1));
@@ -85,15 +87,23 @@ public class CanICoffeeFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+        startTimer();
+    }
+
+    @Override
+    public void onPause() {
+        Log.i(TAG, "onPause");
+        super.onPause();
         stopTimer();
     }
 
     private String getAmPm(int hour, int minute) {
         if (hour >= 12 && hour <= 24) {
             // 24H afternoon/evening
-            if(hour != 12) hour -= 12;
+            if (hour != 12) hour -= 12;
             return goodTime(hour) + ":" + goodTime(minute) + " PM";
         } else if (hour < 12) {
             // 24H morning
@@ -114,7 +124,7 @@ public class CanICoffeeFragment extends Fragment {
 
     private void startTimer() {
         mTimer = new Timer();
-        mTimerTask = new TimerTask() {
+        TimerTask mTimerTask = new TimerTask() {
             public void run() {
                 mTimerHandler.post(new Runnable() {
                     public void run() {

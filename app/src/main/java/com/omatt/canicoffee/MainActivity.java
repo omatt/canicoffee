@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment aboutFragment = getSupportFragmentManager().findFragmentByTag(GlobalValues.FRAG_TAG_ABOUT);
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -45,10 +46,12 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.container, new AboutFragment(), GlobalValues.FRAG_TAG_ABOUT);
-            ft.addToBackStack(GlobalValues.FRAG_TAG_MAIN);
-            ft.commit();
+            if (aboutFragment == null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.container, new AboutFragment(), GlobalValues.FRAG_TAG_ABOUT);
+                ft.addToBackStack(GlobalValues.FRAG_TAG_MAIN);
+                ft.commit();
+            }
         }
 
         return super.onOptionsItemSelected(item);
