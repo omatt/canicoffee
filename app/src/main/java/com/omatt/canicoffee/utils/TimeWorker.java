@@ -1,5 +1,7 @@
 package com.omatt.canicoffee.utils;
 
+import android.util.Log;
+
 import java.util.Calendar;
 
 /**
@@ -15,11 +17,12 @@ public class TimeWorker {
     }
 
     public String getAmPm(int hour, int minute) {
+        Log.i("TimeWorker", "hh" + hour + "mm" + minute);
         if (hour >= 12 && hour <= 24) {
             // 24H afternoon/evening
             if (hour >= 12 && hour < 24) {
                 // 12nn (after)noon
-                if (hour != 12) hour -= 12;
+                if (hour != 12) hour -= 12; 
                 return goodTime(hour) + ":" + goodTime(minute) + " PM";
             } else {
                 // 12mn morning

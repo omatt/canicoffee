@@ -133,6 +133,7 @@ public class CanICoffeeFragment extends Fragment {
                         currentHour = mCalendar.get(Calendar.HOUR);
                         currentMinute = mCalendar.get(Calendar.MINUTE);
                         currentSecond = mCalendar.get(Calendar.SECOND);
+                        if(currentHour == 0) currentHour = 12;
                         mTextViewCurrentTime.setText(getString(R.string.txt_current_time) + " "
                                 + TimeWorker.goodTime(currentHour) + ":" + TimeWorker.goodTime(currentMinute) + ":" + TimeWorker.goodTime(currentSecond) + " "
                                 + ((mCalendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM"));
