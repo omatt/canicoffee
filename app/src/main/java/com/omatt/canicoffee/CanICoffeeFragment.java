@@ -115,9 +115,9 @@ public class CanICoffeeFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        Log.i(TAG, "onPause");
-        super.onPause();
+    public void onStop() {
+        Log.i(TAG, "onStop");
+        super.onStop();
         stopTimer();
     }
 
