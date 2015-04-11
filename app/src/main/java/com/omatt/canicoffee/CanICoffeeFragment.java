@@ -34,7 +34,7 @@ public class CanICoffeeFragment extends Fragment {
     private final String KEY_TIME_COFFEE_2 = "time_coffee_2";
     private TextView mTextViewCurrentTime, mTextViewWakeTimeVal, mTextViewCoffeeTime1, mTextViewCoffeeTime2;
     private int currentHour, currentMinute, currentSecond;
-    private int coffeeTime1startHour, coffeeTime2startHour, coffeeTimeMinute;
+    private int coffeeTimeHour, coffeeTimeMinute;
 
     private Timer mTimer;
     private Handler mTimerHandler = new Handler();
@@ -60,8 +60,7 @@ public class CanICoffeeFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         mTextViewWakeTimeVal.setText(getAmPm(hourOfDay, minute));
-                        coffeeTime1startHour = fixExcessHour(hourOfDay + 3);
-                        coffeeTime2startHour = fixExcessHour(hourOfDay + 9);
+                        coffeeTimeHour = fixExcessHour(hourOfDay);
                         coffeeTimeMinute = minute;
 
                         mTextViewCoffeeTime1.setText(getString(R.string.txt_coffee_cycle_1)
@@ -190,12 +189,12 @@ public class CanICoffeeFragment extends Fragment {
             intent.setType("vnd.android.cursor.item/event");
             intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
             if (isFirsCoffeeCycle) {
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTime1startHour, coffeeTimeMinute));
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTime1startHour, coffeeTimeMinute) + (2 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute)+ (3 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (5 * 60L * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_coffee_cycle_1));
             } else {
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTime2startHour, coffeeTimeMinute));
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTime2startHour, coffeeTimeMinute) + (2 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (9 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (11 * 60L * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_coffee_cycle_2));
             }
             intent.putExtra(Events.ALL_DAY, false);
