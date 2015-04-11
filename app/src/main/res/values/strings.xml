@@ -15,5 +15,8 @@
 
     <string name="txt_remind_coffee_time_1">First coffee time</string>
     <string name="txt_remind_coffee_time_2">Second coffee time</string>
+    <string name="txt_remind_coffee_cycle_1">First coffee time</string>
+    <string name="txt_remind_coffee_cycle_2">Second coffee time</string>
+
     <string name="txt_toast_empty_time">Empty wake time!</string>
 </resources>

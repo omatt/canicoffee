@@ -34,7 +34,7 @@ public class CanICoffeeFragment extends Fragment {
     private final String KEY_TIME_COFFEE_2 = "time_coffee_2";
     private TextView mTextViewCurrentTime, mTextViewWakeTimeVal, mTextViewCoffeeTime1, mTextViewCoffeeTime2;
     private int currentHour, currentMinute, currentSecond;
-    private int coffeeTime1startHour, coffeeTime1endHour, coffeeTime2startHour, coffeeTime2endHour, coffeeTimeMinute;
+    private int coffeeTime1startHour, coffeeTime2startHour, coffeeTimeMinute;
 
     private Timer mTimer;
     private Handler mTimerHandler = new Handler();
@@ -61,9 +61,7 @@ public class CanICoffeeFragment extends Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         mTextViewWakeTimeVal.setText(getAmPm(hourOfDay, minute));
                         coffeeTime1startHour = fixExcessHour(hourOfDay + 3);
-                        coffeeTime1endHour = fixExcessHour(hourOfDay + 5);
                         coffeeTime2startHour = fixExcessHour(hourOfDay + 9);
-                        coffeeTime2endHour = fixExcessHour(hourOfDay + 11);
                         coffeeTimeMinute = minute;
 
                         mTextViewCoffeeTime1.setText(getString(R.string.txt_coffee_cycle_1)
@@ -76,26 +74,18 @@ public class CanICoffeeFragment extends Fragment {
             }
         });
 
-//        FloatingActionButton mFabRemindCoffeeTime1 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_1);
-//        FloatingActionButton mFabRemindCoffeeTime2 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_2);
-//        mFabRemindCoffeeTime1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setCalendarReminder(true);
-//            }
-//        });
-//        mFabRemindCoffeeTime2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setCalendarReminder(false);
-//            }
-//        });
-
-        FloatingActionButton mFabRemindCoffeeTime = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time);
-        mFabRemindCoffeeTime.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton mFabRemindCoffeeTime1 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_1);
+        FloatingActionButton mFabRemindCoffeeTime2 = (FloatingActionButton) rootView.findViewById(R.id.fab_remind_coffee_time_2);
+        mFabRemindCoffeeTime1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCalendarReminder();
+                setCalendarReminder(true);
+            }
+        });
+        mFabRemindCoffeeTime2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCalendarReminder(false);
             }
         });
 
@@ -133,10 +123,16 @@ public class CanICoffeeFragment extends Fragment {
     }
 
     private String getAmPm(int hour, int minute) {
+        Log.i(TAG, "hh" + hour + "mm" + minute);
         if (hour >= 12 && hour <= 24) {
             // 24H afternoon/evening
-            if (hour != 12) hour -= 12;
-            return goodTime(hour) + ":" + goodTime(minute) + " PM";
+            if (hour >= 12 && hour < 24) {
+                if (hour != 12) hour -= 12;
+                return goodTime(hour) + ":" + goodTime(minute) + " PM";
+            } else {
+                hour -= 12;
+                return goodTime(hour) + ":" + goodTime(minute) + " AM";
+            }
         } else if (hour < 12) {
             // 24H morning
             if (hour == 0) hour = 12;
@@ -173,7 +169,7 @@ public class CanICoffeeFragment extends Fragment {
                         mTextViewCurrentTime.setText(getString(R.string.txt_current_time) + " "
                                 + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond) + " "
                                 + ((mCalendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM"));
-                        Log.i(TAG, "Time: " + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond));
+//                        Log.i(TAG, "Time: " + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond));
                     }
                 });
             }
@@ -194,13 +190,13 @@ public class CanICoffeeFragment extends Fragment {
             intent.setType("vnd.android.cursor.item/event");
             intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
             if (isFirsCoffeeCycle) {
-                intent.putExtra("beginTime", getTimeInMillis(coffeeTime1startHour, coffeeTimeMinute));
-                intent.putExtra("endTime", getTimeInMillis(coffeeTime1endHour, coffeeTimeMinute));
-                intent.putExtra(Events.TITLE, "First Coffee Cycle");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTime1startHour, coffeeTimeMinute));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTime1startHour, coffeeTimeMinute) + (2 * 60L * 60L * 1000L));
+                intent.putExtra(Events.TITLE, getString(R.string.txt_coffee_cycle_1));
             } else {
-                intent.putExtra("beginTime", getTimeInMillis(coffeeTime2startHour, coffeeTimeMinute));
-                intent.putExtra("endTime", getTimeInMillis(coffeeTime2endHour, coffeeTimeMinute));
-                intent.putExtra(Events.TITLE, "Second Coffee Cycle");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getCurrentTimeMillis(coffeeTime2startHour, coffeeTimeMinute));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getCurrentTimeMillis(coffeeTime2startHour, coffeeTimeMinute) + (2 * 60L * 60L * 1000L));
+                intent.putExtra(Events.TITLE, getString(R.string.txt_coffee_cycle_2));
             }
             intent.putExtra(Events.ALL_DAY, false);
             startActivity(intent);
@@ -209,20 +205,11 @@ public class CanICoffeeFragment extends Fragment {
         }
     }
 
-    private void setCalendarReminder() {
-        if (!mTextViewWakeTimeVal.getText().toString().equals("")) {
-            Intent intent = new Intent(Intent.ACTION_EDIT);
-            intent.setType("vnd.android.cursor.item/event");
-            intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
-            intent.putExtra(Events.TITLE, "Coffee Cycle");
-            intent.putExtra(Events.ALL_DAY, false);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getActivity(), getString(R.string.txt_toast_empty_time), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private long getTimeInMillis(int hour, int minute) {
-        return (hour * 60 * 60 * 1000L) + (minute * 60 * 1000L);
+    private long getCurrentTimeMillis(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTimeInMillis();
     }
 }

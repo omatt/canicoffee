@@ -61,24 +61,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_remind_coffee_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        fab:fab_colorNormal="@color/blue_a200"
-        fab:fab_colorPressed="@color/blue_a100"
-        fab:fab_icon="@drawable/ic_alarm_add_white_24dp" />
-
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:visibility="gone"
         fab:fab_addButtonColorNormal="@color/blue_a200"
         fab:fab_addButtonColorPressed="@color/blue_a100">
 
@@ -86,7 +74,6 @@
             android:id="@+id/fab_remind_coffee_time_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             fab:fab_colorNormal="@color/blue_200"
             fab:fab_colorPressed="@color/blue_100"
             fab:fab_icon="@drawable/ic_alarm_add_white_24dp"
@@ -96,7 +83,6 @@
             android:id="@+id/fab_remind_coffee_time_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             fab:fab_colorNormal="@color/blue_200"
             fab:fab_colorPressed="@color/blue_100"
             fab:fab_icon="@drawable/ic_alarm_add_white_24dp"
