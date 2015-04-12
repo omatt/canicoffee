@@ -123,6 +123,7 @@ public class CanICoffeeFragment extends Fragment {
         stopTimer();
     }
 
+    // Start Timer thread
     private void startTimer() {
         mTimer = new Timer();
         TimerTask mTimerTask = new TimerTask() {
@@ -145,6 +146,7 @@ public class CanICoffeeFragment extends Fragment {
         mTimer.schedule(mTimerTask, 1000, 1000);
     }
 
+    // Stop Timer thread
     private void stopTimer() {
         if (mTimer != null) {
             mTimer.cancel();
@@ -158,10 +160,13 @@ public class CanICoffeeFragment extends Fragment {
             intent.setType("vnd.android.cursor.item/event");
             intent.putExtra(Events.EVENT_TIMEZONE, TimeZone.getDefault());
             if (isFirsCoffeeCycle) {
+                // First coffee cycle
+                // wake hour + 3H (2H time frame)
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute)+ (3 * 60L * 60L * 1000L));
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (5 * 60L * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_remind_coffee_time_1));
             } else {
+                // wake hour + 9H (2H time frame)
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (9 * 60L * 60L * 1000L));
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (11 * 60L * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_remind_coffee_time_2));

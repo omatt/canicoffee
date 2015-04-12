@@ -5,6 +5,9 @@
 
     <dimen name="action_btn_dimen">56dp</dimen>
 
+    <dimen name="touch_target_height_min">48dp</dimen>
+    <dimen name="btn_height_min">36dp</dimen>
+
     <dimen name="txt_size_small">16sp</dimen>
     <dimen name="txt_size_standard">18sp</dimen>
     <dimen name="txt_size_medium">20sp</dimen>
