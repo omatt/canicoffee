@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_about) {
             if (aboutFragment == null) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.container, new AboutFragment(), GlobalValues.FRAG_TAG_ABOUT);
+                ft.add(R.id.container, new AboutFragment(), GlobalValues.FRAG_TAG_ABOUT);
                 ft.addToBackStack(GlobalValues.FRAG_TAG_MAIN);
                 ft.commit();
             }
