@@ -3,7 +3,7 @@
     <string name="action_about">About</string>
 
     <string name="txt_current_time">Time now is</string>
-    <string name="txt_wake_time">What time did you woke up?</string>
+    <string name="txt_wake_time">What time did you wake up?</string>
     <string name="txt_coffee_cycle_1">Your first coffee cycle is</string>
     <string name="txt_coffee_cycle_2">Your second coffee cycle is</string>
     <string name="txt_time_till">to</string>
