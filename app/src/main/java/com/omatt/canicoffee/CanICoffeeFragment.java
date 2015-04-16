@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import static android.provider.CalendarContract.Events;
 
@@ -65,10 +66,19 @@ public class CanICoffeeFragment extends Fragment {
                         coffeeTimeHour = mTimeWorker.fixExcessHour(hourOfDay);
                         coffeeTimeMinute = minute;
 
+                        String coffeeTime1start = TimeWorker.getHourMin(hourOfDay + 3, minute + 30);
+                        String coffeeTime1end = TimeWorker.getHourMin(hourOfDay + 5, minute + 30);
+                        String coffeeTime2start = TimeWorker.getHourMin(hourOfDay + 7, minute + 30);
+                        String coffeeTime2end = TimeWorker.getHourMin(hourOfDay + 11, minute);
+
                         mTextViewCoffeeTime1.setText(getString(R.string.txt_coffee_cycle_1)
-                                + "\n" + mTimeWorker.getAmPm(hourOfDay + 3, minute) + " " + getString(R.string.txt_time_till) + " " + mTimeWorker.getAmPm(hourOfDay + 5, minute));
+                                + "\n" + mTimeWorker.getAmPm(TimeWorker.getHour(coffeeTime1start, true), TimeWorker.getHour(coffeeTime1start, false))
+                                + " " + getString(R.string.txt_time_till)
+                                + " " + mTimeWorker.getAmPm(TimeWorker.getHour(coffeeTime1end, true), TimeWorker.getHour(coffeeTime1end, false)));
                         mTextViewCoffeeTime2.setText(getString(R.string.txt_coffee_cycle_2)
-                                + "\n" + mTimeWorker.getAmPm(hourOfDay + 9, minute) + " " + getString(R.string.txt_time_till) + " " + mTimeWorker.getAmPm(hourOfDay + 11, minute));
+                                + "\n" + mTimeWorker.getAmPm(TimeWorker.getHour(coffeeTime2start, true), TimeWorker.getHour(coffeeTime2start, false))
+                                + " " + getString(R.string.txt_time_till)
+                                + " " + mTimeWorker.getAmPm(TimeWorker.getHour(coffeeTime2end, true), TimeWorker.getHour(coffeeTime2end, false)));
                     }
                 }, currentHour, currentMinute, false);
                 mTimePicker.show();
@@ -162,12 +172,12 @@ public class CanICoffeeFragment extends Fragment {
             if (isFirsCoffeeCycle) {
                 // First coffee cycle
                 // wake hour + 3H (2H time frame)
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute)+ (3 * 60L * 60L * 1000L));
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (5 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute)+ (3 * 60L * 60L * 1000L) + (30 * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (5 * 60L * 60L * 1000L) + (30 * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_remind_coffee_time_1));
             } else {
                 // wake hour + 9H (2H time frame)
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (9 * 60L * 60L * 1000L));
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (7 * 60L * 60L * 1000L) + (30 * 60L * 1000L));
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, TimeWorker.getCurrentTimeMillis(coffeeTimeHour, coffeeTimeMinute) + (11 * 60L * 60L * 1000L));
                 intent.putExtra(Events.TITLE, getString(R.string.txt_remind_coffee_time_2));
             }
