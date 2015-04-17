@@ -1,7 +1,7 @@
 # canicoffee
 Calculate the best time to drink coffee for your day.
 
-[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](https://play.google.com/store/apps/details?id=com.omatt.canicoffee)
+[![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.omatt.canicoffee)
 
 This project was made out of fun and is based from [keikun17's](https://github.com/keikun17) [Can I Coffee?](https://keikun17.github.io/canicoffee/) that's also available at [Github](https://github.com/keikun17/canicoffee). Best caffeine intake time was based from [I<3Coffee.jp](http://en.ilovecoffee.jp/posts/view/110)
 
