@@ -107,7 +107,7 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
     public void setCoffeeReminder(MainActivity mainActivity, boolean isFirstCoffeeCycle) {
         if (!canICoffeeView.getTimeWake().equals("")) {
             Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-            Log.i(TAG, "setCoffeeReminder isFirstCoffeeCycle: " + isFirstCoffeeCycle);
+//            Log.i(TAG, "setCoffeeReminder isFirstCoffeeCycle: " + isFirstCoffeeCycle);
             int hourOffset, minOffset;
             String message;
             if (isFirstCoffeeCycle) {
@@ -126,7 +126,7 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
             int coffeeMinute = (int) fixedCoffeeTime.getMinutes();
             intent.putExtra(AlarmClock.EXTRA_HOUR, coffeeHour);
             intent.putExtra(AlarmClock.EXTRA_MINUTES, coffeeMinute);
-            Log.i(TAG, "setCoffeeReminder " + coffeeHour + "H" + coffeeMinute + "M");
+//            Log.i(TAG, "setCoffeeReminder " + coffeeHour + "H" + coffeeMinute + "M");
             intent.putExtra(AlarmClock.EXTRA_MESSAGE, message);
             mainActivity.startActivity(intent);
         } else {
