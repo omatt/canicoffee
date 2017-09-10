@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".modules.coffeetime.CanICoffeeFragment">
 
     <TextView
         android:id="@+id/tv_time"
@@ -17,11 +17,12 @@
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/txt_size_large" />
 
-    <TextView
-        android:id="@+id/tv_wake_time"
+    <Button
+        android:id="@+id/btn_wake_time"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/touch_target_height_min"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:text="@string/txt_wake_time"
         android:textColor="@color/app_primary"
@@ -31,9 +32,9 @@
         android:id="@+id/tv_wake_time_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tv_wake_time"
-        android:layout_alignStart="@id/tv_wake_time"
-        android:layout_below="@id/tv_wake_time"
+        android:layout_alignLeft="@id/btn_wake_time"
+        android:layout_alignStart="@id/btn_wake_time"
+        android:layout_below="@id/btn_wake_time"
         android:textSize="@dimen/txt_size_medium" />
 
     <TextView

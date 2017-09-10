@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".modules.coffeetime.CanICoffeeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,10 +33,11 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_wake_time"
+            <Button
+                android:id="@+id/btn_wake_time"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/touch_target_height_min"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
                 android:text="@string/txt_wake_time"
                 android:textColor="@color/app_primary"
                 android:textSize="@dimen/txt_size_large" />
@@ -54,7 +55,7 @@
                 android:textSize="@dimen/txt_size_medium" />
 
             <TextView
-                android:id="@+id/tv_coffee_time_2"\
+                android:id="@+id/tv_coffee_time_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txt_size_medium" />

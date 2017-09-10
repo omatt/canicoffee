@@ -1,27 +1,41 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "com.omatt.canicoffee"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 15
-        versionName '0.1.4'
+        targetSdkVersion 26
+        versionCode 16
+        versionName '0.1.5'
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     productFlavors {
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.getbase:floatingactionbutton:1.9.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$rootProject.buildToolsVersion"
+    implementation "com.getbase:floatingactionbutton:$rootProject.fabVersion"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
+
+    // Butterknife
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 }
+
+apply plugin: 'com.google.gms.google-services'
