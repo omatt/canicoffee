@@ -2,10 +2,11 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
+        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
         classpath 'com.google.gms:google-services:3.1.0'
         classpath 'com.google.firebase:firebase-plugins:1.1.1' // Crash Reporting plugin
 
@@ -16,6 +17,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven {
             url "https://maven.google.com"
@@ -32,7 +34,7 @@ ext{
     minSdkVersion = 21
     targetSdkVersion = 26
     compileSdkVersion = 26
-    buildToolsVersion = '26.0.2'
+    buildToolsVersion = '26.1.0'
 
     // App dependencies
     fabVersion = '1.10.1'
