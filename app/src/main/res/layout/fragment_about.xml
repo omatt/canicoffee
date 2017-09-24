@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:clickable="true"
     android:background="@color/app_window_bg"
-    tools:context="com.omatt.canicoffee.AboutFragment">
+    tools:context="com.omatt.canicoffee.modules.about.AboutFragment">
 
     <TextView
         android:layout_width="match_parent"

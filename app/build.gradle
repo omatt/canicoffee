@@ -7,7 +7,7 @@ android {
         applicationId "com.omatt.canicoffee"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 17
+        versionCode 18
         versionName '0.1.6'
     }
     buildTypes {
@@ -28,11 +28,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.buildToolsVersion"
     implementation "com.getbase:floatingactionbutton:$rootProject.fabVersion"
-
     // Firebase
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
     implementation "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
-
     // Butterknife
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"

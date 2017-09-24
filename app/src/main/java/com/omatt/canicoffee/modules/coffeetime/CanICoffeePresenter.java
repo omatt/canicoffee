@@ -5,10 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.provider.AlarmClock;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.omatt.canicoffee.MainActivity;
+import com.omatt.canicoffee.modules.MainActivity;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.utils.TimeWorker;
 import com.omatt.canicoffee.utils.models.Time;

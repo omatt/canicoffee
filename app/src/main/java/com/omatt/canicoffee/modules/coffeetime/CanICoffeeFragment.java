@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.omatt.canicoffee.MainActivity;
+import com.omatt.canicoffee.modules.MainActivity;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.utils.GlobalValues;
 import com.omatt.canicoffee.utils.models.Time;

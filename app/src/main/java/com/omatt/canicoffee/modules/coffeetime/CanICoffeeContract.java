@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.omatt.canicoffee.BasePresenter;
 import com.omatt.canicoffee.BaseView;
-import com.omatt.canicoffee.MainActivity;
+import com.omatt.canicoffee.modules.MainActivity;
 import com.omatt.canicoffee.utils.models.Time;
 
 /**
