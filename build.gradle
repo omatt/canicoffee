@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
+        classpath 'com.android.tools.build:gradle:3.1.0-alpha01'
         classpath 'com.google.gms:google-services:3.1.0'
         classpath 'com.google.firebase:firebase-plugins:1.1.1' // Crash Reporting plugin
 
@@ -40,5 +40,5 @@ ext{
     fabVersion = '1.10.1'
     butterknifeVersion = '8.6.0'
     daggerVersion = '2.11'
-    firebaseVersion = '11.4.0'
+    firebaseVersion = '11.4.2'
 }
