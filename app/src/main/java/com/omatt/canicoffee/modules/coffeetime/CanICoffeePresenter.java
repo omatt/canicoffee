@@ -3,12 +3,18 @@ package com.omatt.canicoffee.modules.coffeetime;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.provider.AlarmClock;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.omatt.canicoffee.modules.MainActivity;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.appinvite.FirebaseAppInvite;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.omatt.canicoffee.R;
+import com.omatt.canicoffee.modules.MainActivity;
+import com.omatt.canicoffee.utils.GlobalValues;
 import com.omatt.canicoffee.utils.TimeWorker;
 import com.omatt.canicoffee.utils.models.Time;
 
@@ -53,9 +59,7 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
                     currentMinute = mCalendar.get(Calendar.MINUTE);
                     currentSecond = mCalendar.get(Calendar.SECOND);
                     if (currentHour == 0) currentHour = 12;
-                    String strCurrentTime = context.getString(R.string.txt_current_time) + " "
-                            + mTimeWorker.goodTime(currentHour) + ":" + mTimeWorker.goodTime(currentMinute) + ":" + mTimeWorker.goodTime(currentSecond) + " "
-                            + ((mCalendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM");
+                    String strCurrentTime = mTimeWorker.timeNow(context, mCalendar, currentHour, currentMinute, currentSecond);
                     canICoffeeView.updateTimeCurrent(strCurrentTime);
 //                        Log.i(TAG, "Time: " + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond));
                 });
@@ -131,5 +135,45 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
         } else {
             Toast.makeText(mainActivity, mainActivity.getString(R.string.txt_toast_empty_time), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void processDeepLink(MainActivity mainActivity, Intent intent) {
+        FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(data -> {
+            if (data == null) {
+                Log.d(TAG, "getInvitation: no data");
+                return;
+            }
+
+            // Get the deep link
+            Uri deepLink = data.getLink();
+            Log.i(TAG, "Deep Link: " + deepLink);
+            if (deepLink != null && deepLink.getBooleanQueryParameter("coffeetime", false)) {
+                String coffeeTime = deepLink.getQueryParameter("coffeetime");
+                try {
+                    Calendar mCalendar = Calendar.getInstance();
+                    mCalendar.setTimeInMillis(Long.parseLong(coffeeTime));
+                    currentHour = mCalendar.get(Calendar.HOUR);
+                    currentMinute = mCalendar.get(Calendar.MINUTE);
+                    currentSecond = mCalendar.get(Calendar.SECOND);
+                    if (currentHour == 0) currentHour = 12;
+                    String strCurrentTime = mTimeWorker.timeNow(mainActivity, mCalendar, currentHour, currentMinute, currentSecond);
+                    canICoffeeView.updateTimeCurrent(strCurrentTime);
+                } catch (Exception e) {
+                    Toast.makeText(mainActivity, mainActivity.getString(R.string.txt_toast_invalid_time), Toast.LENGTH_SHORT).show();
+                    Crashlytics.logException(e);
+                    Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, coffeeTime);
+                }
+            }
+
+            // Extract invite
+            FirebaseAppInvite invite = FirebaseAppInvite.getInvitation(data);
+            if (invite != null) {
+                String invitationId = invite.getInvitationId();
+                Log.i(TAG, "Invitation ID: " + invitationId);
+            }
+        }).addOnFailureListener(e -> {
+            Log.w(TAG, "getDynamicLink:onFailure", e);
+        });
     }
 }

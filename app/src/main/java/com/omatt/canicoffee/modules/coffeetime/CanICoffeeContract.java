@@ -1,6 +1,7 @@
 package com.omatt.canicoffee.modules.coffeetime;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.omatt.canicoffee.BasePresenter;
 import com.omatt.canicoffee.BaseView;
@@ -37,5 +38,7 @@ class CanICoffeeContract {
         void setTimeWake(Context context);
 
         void setCoffeeReminder(MainActivity mainActivity, boolean isFirstCoffeeCycle);
+
+        void processDeepLink(MainActivity mainActivity, Intent intent);
     }
 }

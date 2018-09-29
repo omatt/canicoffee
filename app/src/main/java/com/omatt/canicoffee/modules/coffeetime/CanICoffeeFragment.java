@@ -1,6 +1,7 @@
 package com.omatt.canicoffee.modules.coffeetime;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.omatt.canicoffee.modules.MainActivity;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.utils.GlobalValues;
@@ -38,7 +40,7 @@ public class CanICoffeeFragment extends Fragment implements CanICoffeeContract.V
     Time time;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
@@ -72,7 +74,7 @@ public class CanICoffeeFragment extends Fragment implements CanICoffeeContract.V
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(GlobalValues.KEY_TIME_CURRENT, mTextViewCurrentTime.getText().toString());
         savedInstanceState.putString(GlobalValues.KEY_TIME_WAKE, mTextViewWakeTimeVal.getText().toString());
@@ -114,7 +116,12 @@ public class CanICoffeeFragment extends Fragment implements CanICoffeeContract.V
 
     @Override
     public void updateTimeCurrent(String time) {
-        mTextViewCurrentTime.setText(time);
+        try {
+            mTextViewCurrentTime.setText(time);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, time);
+        }
     }
 
     @Override

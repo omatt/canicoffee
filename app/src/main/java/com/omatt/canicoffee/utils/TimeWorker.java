@@ -1,7 +1,9 @@
 package com.omatt.canicoffee.utils;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.utils.models.Time;
 
 import java.util.Calendar;
@@ -131,10 +133,16 @@ public class TimeWorker {
         return hour;
     }
 
-    public String goodTime(int hourMin) {
+    String goodTime(int hourMin) {
         if (hourMin < 10) {
             return "0" + hourMin;
         }
         return "" + hourMin;
+    }
+
+    public String timeNow(Context context, Calendar mCalendar, int currentHour, int currentMinute, int currentSecond){
+        return context.getString(R.string.txt_current_time) + " "
+                + goodTime(currentHour) + ":" + goodTime(currentMinute) + ":" + goodTime(currentSecond) + " "
+                + ((mCalendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM");
     }
 }
