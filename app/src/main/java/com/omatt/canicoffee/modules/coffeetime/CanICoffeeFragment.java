@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.omatt.canicoffee.modules.MainActivity;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.utils.GlobalValues;
@@ -119,8 +119,8 @@ public class CanICoffeeFragment extends Fragment implements CanICoffeeContract.V
         try {
             mTextViewCurrentTime.setText(time);
         } catch (Exception e) {
-            Crashlytics.logException(e);
-            Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, time);
+//            Crashlytics.logException(e);
+//            Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, time);
         }
     }
 

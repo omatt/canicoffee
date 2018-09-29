@@ -9,12 +9,10 @@ import android.provider.AlarmClock;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.appinvite.FirebaseAppInvite;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.modules.MainActivity;
-import com.omatt.canicoffee.utils.GlobalValues;
 import com.omatt.canicoffee.utils.TimeWorker;
 import com.omatt.canicoffee.utils.models.Time;
 
@@ -152,6 +150,7 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
                 String coffeeTime = deepLink.getQueryParameter("coffeetime");
                 try {
                     Calendar mCalendar = Calendar.getInstance();
+                    assert coffeeTime != null;
                     mCalendar.setTimeInMillis(Long.parseLong(coffeeTime));
                     currentHour = mCalendar.get(Calendar.HOUR);
                     currentMinute = mCalendar.get(Calendar.MINUTE);
@@ -161,8 +160,8 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
                     canICoffeeView.updateTimeCurrent(strCurrentTime);
                 } catch (Exception e) {
                     Toast.makeText(mainActivity, mainActivity.getString(R.string.txt_toast_invalid_time), Toast.LENGTH_SHORT).show();
-                    Crashlytics.logException(e);
-                    Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, coffeeTime);
+//                    Crashlytics.logException(e);
+//                    Crashlytics.setString(GlobalValues.CRASH_LOG_TIME, coffeeTime);
                 }
             }
 
@@ -172,8 +171,6 @@ public class CanICoffeePresenter implements CanICoffeeContract.Presenter {
                 String invitationId = invite.getInvitationId();
                 Log.i(TAG, "Invitation ID: " + invitationId);
             }
-        }).addOnFailureListener(e -> {
-            Log.w(TAG, "getDynamicLink:onFailure", e);
-        });
+        }).addOnFailureListener(e -> Log.w(TAG, "getDynamicLink:onFailure", e));
     }
 }
