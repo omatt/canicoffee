@@ -14,6 +14,8 @@
         \n\nSource available at <a href="https://github.com/omatt/canicoffee">GitHub</a>.
     </string>
 
+    <string name="txt_about_privacy">Privacy Policy: <a href="https://github.com/omatt/canicoffee/blob/master/privacy_policy.md">https://github.com/omatt/canicoffee/blob/master/privacy_policy.md</a></string>
+
     <string name="txt_remind_coffee_time_1">First coffee time</string>
     <string name="txt_remind_coffee_time_2">Second coffee time</string>
 

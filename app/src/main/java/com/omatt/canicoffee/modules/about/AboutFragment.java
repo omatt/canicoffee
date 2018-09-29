@@ -2,6 +2,7 @@ package com.omatt.canicoffee.modules.about;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.omatt.canicoffee.R;
 
+import java.util.Objects;
+
 /**
  * Created by Omatt on 4/10/2015.
  * About
@@ -21,7 +24,7 @@ public class AboutFragment extends Fragment {
     private final String TAG = "AboutFragment";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_about, container, false);
@@ -33,7 +36,7 @@ public class AboutFragment extends Fragment {
 
         PackageInfo packageInfo;
         try {
-            packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            packageInfo = Objects.requireNonNull(getActivity()).getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
             String versionName = packageInfo.versionName;
             String version = "version " + versionName;
             mTextViewAboutAppVersion.setText(version);

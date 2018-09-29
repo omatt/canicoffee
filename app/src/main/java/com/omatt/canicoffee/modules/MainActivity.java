@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import com.omatt.canicoffee.R;
 import com.omatt.canicoffee.modules.about.AboutFragment;
 import com.omatt.canicoffee.modules.coffeetime.CanICoffeeFragment;
-import com.omatt.canicoffee.utils.GlobalValues;
 
 
 public class MainActivity extends AppCompatActivity {
