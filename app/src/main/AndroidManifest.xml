@@ -18,11 +18,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-                <!-- Deep link handler -->
+            <!-- Intent Filter for MainActivity -->
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+
                 <data android:host="keikun17.github.io/canicoffee/" android:scheme="http"/>
                 <data android:host="keikun17.github.io/canicoffee/" android:scheme="https"/>
             </intent-filter>
